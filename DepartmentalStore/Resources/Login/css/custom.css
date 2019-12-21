@@ -1,0 +1,14 @@
+﻿.loginButton {
+    font-family: "roboto", sans-serif;
+    font-size: 13px;
+    padding: 12px 8px;
+    font-weight: 600;
+}
+
+.warning::-webkit-input-placeholder {
+    color: #da1b60 !important;
+}
+
+.warning {
+    border: 1px solid #da1b60 !important;
+}

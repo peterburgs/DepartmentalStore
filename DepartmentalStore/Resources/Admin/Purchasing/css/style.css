@@ -1,0 +1,55 @@
+﻿#container {
+    display: grid;
+    color: black;
+    grid-template-columns: 76% 24%;
+}
+
+#invoice {
+    color: black;
+}
+
+#addItem {
+    height: 515px;
+    background: #f2f2f2;
+    border: 3px solid #d3d3d3;
+    color: black;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.leftSide {
+    padding: 5px;
+}
+
+.rightSide {
+    padding: 5px;
+    padding-left: 5px;
+}
+
+i {
+    color: black;
+}
+
+#delete {
+    background-color: transparent;
+    border: 1px solid #f2f2f2;
+}
+
+    #delete:hover i {
+        font-size: 24px;
+        color: white;
+    }
+
+    #delete:hover {
+        color: red;
+        background: red;
+    }
+
+.addItem {
+    padding: 5px;
+}
+#table{
+    width:100%;
+}

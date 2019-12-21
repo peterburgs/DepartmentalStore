@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+          rel="stylesheet" />
+    <!--Link CSS-->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/Admin/Layout/css")
+    @RenderSection("Styles", required: false)
+    <!--Title-->
+    <title>@ViewBag.Title</title>
+
+    <!--Fav Icon-->
+    <link rel="shortcut icon" href="~/Resources/Admin/Layout/images/icon.png" type="image/png" />
+</head>
+
+<!--Main Body-->
+<body>
+    <!--NavBar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"
+         style="height: 60px;">
+        <span style="font-size:30px;cursor:pointer; color: black;font-weight: bold;"
+              onclick="openNav()">&#9776;</span>
+        <!--Icon-->
+        <div>
+            <a href="/Admin/Dashboard">
+                <img src="~/Resources/Admin/Layout/images/icon.svg"
+                     width="90"
+                     class="collapse navbar-collapse"
+                     style="margin-left: 30px;" />
+            </a>
+        </div>
+        <!--Website Name-->
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="/Admin/Dashboard">Departmental Store</a>
+        </div>
+
+        <!--Account: Dropdown menu-->
+        <nav class="nav">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="~/Resources/Admin/Layout/images/vietnam-flag.svg" width="60" />
+                        <span style="color: white; font-size: larger;">
+                            Administrator
+                        </span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <img src="~/Resources/Admin/Layout/images/myProfile.svg" width="25" />
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="~/Resources/Admin/Layout/images/setting.svg" width="25" />
+                                Setting
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="~/Resources/Admin/Layout/images/help.svg" width="25" />
+                                Help
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Login/Index"><img src="~/Resources/Admin/Layout/images/logout.svg" width="25" /> Log out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </nav>
+
+    <!--Section-->
+    <section>
+        <!--Side Nav Bar-->
+        <div id="mySidenav" class="sidenav" style="z-index:999;">
+            <!--Close Slide Bar-->
+            <button class="closebtn" onclick="closeNav()">
+                <img src="~/Resources/Admin/Layout/images/hideDetail.svg" width="40" />
+            </button>
+            <!--Dashboard-->
+            <a href="/Admin/Dashboard" id="dashboard">
+                <img src="~/Resources/Admin/Layout/images/Dashboard.svg"
+                     width="25"
+                     style="margin: 2px 8px 10px 0px;" />
+                Dashboard
+            </a>
+
+            <!--Products-->
+            <a href="/Admin/Products" id="products" >
+                <img src="~/Resources/Admin/Layout/images/Product.svg"
+                     width="25"
+                     style="margin: 2px 8px 10px 0px;" />
+                Products
+            </a>
+
+            <!--Staff-->
+            <a href="/Admin/Staffs" id="staff">
+                <img src="~/Resources/Admin/Layout/images/Staff.svg"
+                     width="25"
+                     style="margin: 2px 8px 10px 0px;" />
+                Staff
+            </a>
+
+            <!--Customer-->
+            <a href="/Admin/Customers" id="customer">
+                <img src="~/Resources/Admin/Layout/images/Customer.svg"
+                     width="25"
+                     style="margin: 2px 8px 10px 0px;" />
+                Customer
+            </a>
+
+            <!--Purchasing-->
+            <a href="/Admin/Purchasing" id="purchasing">
+                <img src="~/Resources/Admin/Layout/images/Purchasing.svg"
+                     width="25"
+                     style="margin: 2px 8px
+          10px 0px;" />
+                Purchasing
+            </a>
+        </div>
+        <!--End of Side Nav Bar-->
+        <!--Workspace-->
+        <div id="workspace">
+            @RenderBody()
+        </div>
+        <!--End of Workspace-->
+    </section>
+
+    <!--Script-->
+    <!--LinkJS-->
+    <div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/Admin/Layout/js")
+        @RenderSection("Scripts", required: false)
+    </div>
+</body>
+</html>

@@ -1,0 +1,407 @@
+﻿
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    @Styles.Render("~/bundles/Admin/Product/css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Admin/Product/js")
+}
+
+@model DepartmentalStore.Viewmodels.ProductViewModel
+
+
+<!--Export to PDF-->
+<button class="btn" id="exportPdf">
+    @Html.ActionLink("Export PDF", "ProductReport", new { ReportType = "pdf" })
+    <img src="~/Resources/Admin/Layout/images/pdf.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to PDF-->
+<!--Export to Excel-->
+<button class="btn" id="exportExcel">
+    @Html.ActionLink("Export Excel", "ProductReport", new { ReportType = "excel" })
+    <img src="~/Resources/Admin/Layout/images/excel.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to Excel-->
+<!--Export to Word-->
+<button class="btn" id="exportWord">
+    @Html.ActionLink("Export Word", "ProductReport", new { ReportType = "word" })
+    <img src="~/Resources/Admin/Layout/images/word.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to Word-->
+
+<div style="width: 1300px; margin: 10px auto; ">
+    <button id="addProduct" class="btn btn-lg btn-primary" style="margin-right: 10px; border-radius: 10px; background-color: #007dff;">
+        Add Product
+    </button>
+
+    @*Searching Bar*@
+    <form id="searchForm" class="form-inline my-2 my-lg-0" style="display:inline-block;float:right;">
+        <input id="search" class="form-control mr-sm-2" type="search" placeholder="Product's Name or ID" aria-label="Search" style="border-top:none;border-left:none; border-right:none;">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-image: none;">
+            <i class="material-icons" style="background-image: none;">
+                search
+            </i>
+        </button>
+    </form>
+</div>
+<!-- Add Product Section -->
+<div class="bg-product">
+    <div class="bg-product-contents">
+        <div class="close" id="closeAddProduct">+</div>
+        <!--Form to add new Product-->
+        <form id="addProductForm" enctype="multipart/form-data">
+            <h2 class="form-row popup-title">
+                Add New Product
+            </h2>
+            <div class="form-row">
+                <!--Product Name-->
+                <div class="form-group col-md-6">
+                    <label for="productName">Product Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="productName"
+                           placeholder="Name" />
+                </div>
+                <!--Product ID-->
+                <div class="form-group col-md-6">
+                    <label for="productId">Product ID</label>
+                    @{
+                        try
+                        {
+                            int max = 0;
+                            for (int i = 0; i < Model.AllProducts.Count; i++)
+                            {
+                                if (int.Parse(Model.AllProducts[i].pid) > max)
+                                {
+                                    max = int.Parse(Model.AllProducts[i].pid);
+                                }
+                            }
+                            int pid = max + 1;
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="productId"
+                                   placeholder="ID"
+                                   readonly="readonly"
+                                   value=@pid />
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Vender-->
+                <div class="form-group col-md-6">
+                    <label for="productVender">Vender</label>
+                    <input type="text"
+                           class="form-control"
+                           id="productVender"
+                           placeholder="Vender Name" />
+                </div>
+                <!--Rating-->
+                <div class="form-group col-md-6 ">
+                    <label for="productRating">Rating</label>
+                    <input type="text"
+                           class="form-control"
+                           id="productRating"
+                           placeholder="VND" />
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom:20px;">
+                <!--Product Type-->
+                <div class="form-group col-md-6">
+                    <label for="productType">Type</label>
+                    <select id="productType" class="form-control" style="height: 40px;">
+                        <option value="alcohol">Alcohol </option>
+                        <option value="babyCare">Baby-care</option>
+                        <option value="bakery">Bakery </option>
+                        <option value="books">Books </option>
+                        <option value="biscuit">Biscuit </option>
+                        <option value="canned">Canned </option>
+                        <option value="cigarettes">Cigarettes  </option>
+                        <option value="candies">Candies  </option>
+                        <option value="comestics">Cosmetics  </option>
+                        <option value="drinkingWater">Drinking Water  </option>
+                        <option value="eggs">Eggs  </option>
+                        <option value="energyDrink">Energy Drink  </option>
+                        <option value="houseCleaning">House-cleaning </option>
+                        <option value="milk">Milk </option>
+                        <option value="noodle">Noodle  </option>
+                        <option value="personalHygiene">Personal Hygiene </option>
+                        <option value="riceFlour">Rice & Flour </option>
+                        <option value="softDrink" selected="selected">Soft Drink </option>
+                        <option value="snack">Snack  </option>
+                        <option value="teaCoffee">Tea and coffee  </option>
+
+                    </select>
+                </div>
+                <!--Product Unit-->
+                <div class="form-group col-md-6">
+                    <label for="productUnit">Unit</label>
+                    <select id="productUnit" class="form-control" style="height: 40px;">
+                        <option>Bag</option>
+                        <option selected="selected">Bottle</option>
+                        <option>Box</option>
+                        <option>Can</option>
+                        <option>Item</option>
+                        <option>Jar</option>
+                        <option>Pack</option>
+                        <option>Package</option>
+                        <option>Piece</option>
+                        <option>Set</option>
+                        <option>Tube</option>
+
+
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <!--Add Image 1-->
+                <input type="file" name="pic" accept="image/*" id="AddImage1">
+                <!--Add Image 2-->
+                <input type="file" name="pic" accept="image/*" id="AddImage2">
+                <!--Add Image 3-->
+                <input type="file" name="pic" accept="image/*" id="AddImage3">
+            </div>
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+<!--End of Add Product-->
+<!-- Add New Batch Section -->
+<div class="bg-batch">
+    <div class="bg-batch-contents">
+        <div class="close" id="closeAddBatch">+</div>
+        <!--Form to add new Batch-->
+        <form id="addBatchForm">
+            <h2 class="form-row popup-title">
+                Add New Batch
+            </h2>
+            <!--Batch ID-->
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="batchId">Batch ID</label>
+                    <input type="text"
+                           class="form-control"
+                           id="batchId"
+                           placeholder="Batch ID"
+                           readonly="readonly" />
+                </div>
+                <!--Product ID-->
+                <div class="form-group col-md-6">
+                    <label for="batchProductId">Product ID</label>
+                    <input type="text"
+                           class="form-control"
+                           id="batchProductId"
+                           placeholder="Product ID"
+                           readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-row">
+                <!--Import Date-->
+                <div class="form-group col-md-6">
+                    <label>Import Date</label>
+                    <input class="form-control" id="importDate" />
+                </div>
+                <!--Expiration Date-->
+                <div class="form-group col-md-6">
+                    <label>Expiration Date</label>
+                    <input class="form-control" id="expirationDate" />
+                </div>
+            </div>
+
+            <!--Quantity-->
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <label for="quantity">Quantity</label>
+                    <input type="number"
+                           class="form-control"
+                           id="quantity"
+                           placeholder="Quantity of batch" />
+                </div>
+            </div>
+            <!--Confirm Add Batch-->
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+<!--End of Add Batch-->
+<!-- Edit Product Section -->
+<div class="bg-edit">
+    <div class="bg-edit-contents">
+        <div class="close" id="closeEditProduct">+</div>
+        <!--Form to add new Product-->
+        <form id="editProductForm">
+            <h2 class="form-row popup-title">
+                Edit Product
+            </h2>
+            <div class="form-row">
+                <!--Product Name-->
+                <div class="form-group col-md-6">
+                    <label for="editProductName">Product Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editProductName"
+                           placeholder="Name" />
+                </div>
+                <!--Product ID-->
+                <div class="form-group col-md-6">
+                    <label for="editProductId">Product ID</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editProductId"
+                           placeholder="ID"
+                           readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Vender-->
+                <div class="form-group col-md-12">
+                    <label for="editProductVender">Vender</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editProductVender"
+                           placeholder="Vender Name" />
+                </div>
+            </div>
+            <div class="form-row">
+                <!--Product Type-->
+                <div class="form-group col-md-4">
+                    <label for="editProductType">Type</label>
+                    <select id="editProductType" class="form-control" style="height:40px;">
+                        <option value="alcohol">Alcohol </option>
+                        <option value="babyCare">Baby-care</option>
+                        <option value="bakery">Bakery </option>
+                        <option value="books">Books </option>
+                        <option value="biscuit">Biscuit </option>
+                        <option value="canned">Canned </option>
+                        <option value="cigarettes">Cigarettes  </option>
+                        <option value="candies">Candies  </option>
+                        <option value="comestics">Cosmetics  </option>
+                        <option value="drinkingWater">Drinking Water  </option>
+                        <option value="eggs">Eggs  </option>
+                        <option value="energyDrink">Energy Drink  </option>
+                        <option value="houseCleaning">House-cleaning </option>
+                        <option value="milk">Milk </option>
+                        <option value="noodle">Noodle  </option>
+                        <option value="personalHygiene">Personal Hygiene </option>
+                        <option value="riceFlour">Rice & Flour </option>
+                        <option value="softDrink">Soft Drink </option>
+                        <option value="snack">Snack  </option>
+                        <option value="teaCoffee">Tea and coffee  </option>
+                    </select>
+                </div>
+                <!--Product Unit-->
+                <div class="form-group col-md-3">
+                    <label for="editProductUnit">Unit</label>
+                    <select id="editProductUnit" class="form-control" style="height:40px;">
+                        <option>Bag</option>
+                        <option>Bottle</option>
+                        <option>Box</option>
+                        <option>Can</option>
+                        <option>Item</option>
+                        <option>Jar</option>
+                        <option>Pack</option>
+                        <option>Package</option>
+                        <option>Piece</option>
+                        <option>Set</option>
+                        <option>Tube</option>
+                    </select>
+                </div>
+                <!--Rating-->
+                <div class="form-group col-md-5 ">
+                    <label for="editProductRating">Rating</label>
+                    <input type="number"
+                           class="form-control"
+                           id="editProductRating"
+                           placeholder="VND"
+                           style="margin-top:0px!important; height:40px;" />
+                </div>
+            </div>
+            <div>
+                <!--Edit Image 1-->
+                <input type="file" name="pic" accept="image/*" id="EditImage1">
+                <!--Edit Image 2-->
+                <input type="file" name="pic" accept="image/*" id="EditImage2">
+                <!--Edit Image 3-->
+                <input type="file" name="pic" accept="image/*" id="EditImage3">
+            </div>
+
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<!--Data Table-->
+<div class="table-container">
+
+
+    <table class="table table-bordered table-striped mb-0">
+
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 10%;" scope="col">ID</th>
+                <th style="width: 20%;" scope="col">Product Name</th>
+                <th style="width: 15%;" scope="col">Price</th>
+                <th style="width: 20%;" scope="col">Unit</th>
+                <th style="width: 15%;" scope="col">Quantity</th>
+                <th style="width: 20%;" scope="col"></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--Table Container is custom   -->
+<div class="table-container my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td style="width: 10%;">@product.pid</td>
+                <td style="width: 20%;"><a href="/Admin/ProductDetail-@product.pid" target="_blank" style="font-size: 16px;">@product.name</a></td>
+                @{
+                    var price = string.Format("{0:#,0}", product.price);
+                }
+                <td style="width: 15%;">@price VND</td>
+                <td style="width: 20%;">@product.unit</td>
+                <td style="width: 15%;">@product.quantity</td>
+                <td style="width: 20%;">
+                    <button value="@product.pid" class="btn btn-sm btn-primary addBatchBtn" style="background-color:transparent;">
+                        <!--Add Batch icon-->
+                        <img src="~/Resources/Admin/Layout/images/newbatch.svg" width="30px" />
+                    </button>
+                    <button class="btn btn-sm btn-primary editProductBtn " style="background-color:transparent;"
+                            value="@product.pid">
+                        <!--Edit Product icon-->
+                        <img src="~/Resources/Admin/Layout/images/pencil.svg" width="30px" />
+                    </button>
+                    <button class="btn btn-sm btn-danger deleteProductBtn" style="background-color:transparent;" value="@product.pid">
+                        <!--Delete Product icon-->
+                        <img src="~/Resources/Admin/Layout/images/delete.svg" width="30px" />
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<!--End of Data table-->

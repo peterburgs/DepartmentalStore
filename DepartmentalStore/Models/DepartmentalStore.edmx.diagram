@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2c994383fae640febf1963bdbc959053" Name="Diagram1">
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.AdminAccount" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Batch" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Customer" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.DepartmentalStore" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Detail" Width="1.5" PointX="10.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Product" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Purchase" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.Staff" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.StaffAccount" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Batch__pid__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Customer__did__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Purchase__cid__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Product__did__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Staff__did__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Detail__pcid__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Detail__pid__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__Purchase__sid__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__StaffAccoun__sid__398D8EEE" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.ImageReference" Width="1.5" PointX="8.75" PointY="1.5" />
+        <AssociationConnector Association="DepartmentalStoreManagementModel.FK__ImageRefere__pid__07C12930" />
+        <EntityTypeShape EntityType="DepartmentalStoreManagementModel.MonthlyIncome" Width="1.5" PointX="7.375" PointY="8.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

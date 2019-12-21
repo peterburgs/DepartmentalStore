@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+@model DepartmentalStore.Viewmodels.CustomerViewModel
+
+@section Styles {
+    @Styles.Render("~/bundles/Staff/Customer/css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Staff/Customer/js")
+    <script type="text/javascript">
+        $('#searchForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let customerName = $("#search").val();
+
+            if (customerName === "") {
+                window.location.href = `/Staff-@TempData.Peek("StaffId")/Customers`;
+            } else {
+                window.location.href = `/Staff-@TempData.Peek("StaffId")/Customers/Search-${customerName}`;
+            }
+
+        });
+    </script>
+}
+
+
+<div style="width: 1300px; margin: 10px auto; ">
+    <button id="addCustomer" class="btn btn-lg btn-primary" style="margin-right: 10px; border-radius: 10px; background-color: #007dff;">
+        Add New Customer
+    </button>
+    @*Searching Bar*@
+    <form id="searchForm" class="form-inline my-2 my-lg-0" style="display:inline-block;float:right;">
+        <input id="search" class="form-control mr-sm-2" type="search" placeholder="Customer's Name" aria-label="Search" style="border-top:none;border-left:none; border-right:none; width: 210px;">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-image: none;">
+            <i class="material-icons" style="background-image: none;">
+                search
+            </i>
+        </button>
+    </form>
+</div>
+<!-- Add New Customer Section -->
+<div class="bg-customer">
+    <div class="bg-customer-contents">
+        <div class="close" id="closeAddCustomer">+</div>
+        <!--Form to add new Staff-->
+        <form id="addCustomerForm">
+            <h2 class="form-row popup-title">
+                Add New Customer
+            </h2>
+            <div class="form-row">
+                <!--Customer Name-->
+                <div class="form-group col-md-6">
+                    <label for="customerName">Customer Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="customerName"
+                           placeholder="Name" />
+                </div>
+                <!--Customer ID-->
+                <div class="form-group col-md-6">
+                    <label for="customerId">Customer ID</label>
+                    @{
+                        int max = 0;
+                        for (int i = 0; i < Model.AllCustomers.Count; i++)
+                        {
+                            if (int.Parse(Model.AllCustomers[i].cid) > max)
+                            {
+                                max = int.Parse(Model.AllCustomers[i].cid);
+                            }
+                        }
+                        int cid = max + 1;
+
+                        <input type="text"
+                               class="form-control"
+                               id="customerId"
+                               placeholder="ID"
+                               readonly="readonly"
+                               value=@cid />
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Phone Number-->
+                <div class="form-group col-md-6 ">
+                    <label for="phoneNumber">Phone No.</label>
+                    <input type="text"
+                           class="form-control"
+                           id="phoneNumber"
+                           placeholder="Phone Number" />
+                </div>
+                <!--Accumulated Points-->
+                <div class="form-group col-md-6">
+                    <label for="point">Accumulated Points</label>
+                    <input type="text"
+                           class="form-control"
+                           id="points"
+                           placeholder="Points" />
+                </div>
+
+            </div>
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary" id="confirmAdd">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+<!--End of Add New Customer-->
+<!-- Edit Customer Info Section -->
+<div class="bg-editCustomer">
+    <div class="bg-editCustomer-contents">
+        <div class="close" id="closeEditCustomer">+</div>
+        <form id="editCustomerForm">
+            <!--Header-->
+            <h2 class="form-row popup-title">
+                Edit Customer Info
+            </h2>
+            <div class="form-row">
+                <!--Customer Name-->
+                <div class="form-group col-md-6">
+                    <label for="customerName">Customer Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editCustomerName"
+                           placeholder="Name" />
+                </div>
+                <!--Customer ID-->
+                <div class="form-group col-md-6">
+                    <label for="customerId">Customer ID</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editCustomerId"
+                           placeholder="ID"
+                           readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Phone Number-->
+                <div class="form-group col-md-6 ">
+                    <label for="editPhoneNumber">Phone No.</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editPhoneNumber"
+                           placeholder="Phone Number" />
+                </div>
+                <!--Accumulated Points-->
+                <div class="form-group col-md-6">
+                    <label for="point">Accumulated Points</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editPoints"
+                           placeholder="Points"
+                           readonly="readonly" />
+                </div>
+            </div>
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary" id="confirmEdit">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+
+<!--Data Table-->
+<div class="table-container">
+    <table class="table table-bordered table-striped mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 15%;" scope="col">ID</th>
+                <th style="width: 20%;" scope="col">Name</th>
+                <th style="width: 20%;" scope="col">Phone No.</th>
+                <th style="width: 20%;" scope="col">Accumulated Points</th>
+                <th style="width: 10%;" scope="col"></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--Table Container is custom   -->
+<div class="table-container my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        @foreach (var cus in Model.Customers)
+        {
+            <tr>
+                <td style="width: 15%;">@cus.cid</td>
+                <td style="width: 20%;">@cus.name</td>
+                <td style="width: 20%;">@cus.phone</td>
+                <td style="width: 20%;">@cus.points</td>
+                <td style="width: 10%;">
+                    <button class="editCustomerBtn btn btn-sm btn-primary " style="background-color:transparent;" value="@cus.cid">
+                        <img src="~/Resources/Admin/Layout/images/pencil.svg" width="30px" />
+                    </button>
+                    <button class="deleteCustomerBtn btn btn-sm btn-danger " style="background-color:transparent;" value="@cus.cid">
+                        <img src="~/Resources/Admin/Layout/images/delete.svg" width="30px" />
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<!--End of Data table-->

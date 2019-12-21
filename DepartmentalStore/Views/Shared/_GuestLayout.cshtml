@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+          rel="stylesheet" />
+    <!--Link CSS-->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/Guest/Layout/css")
+    @RenderSection("Styles", required: false)
+    <!--Title-->
+    <title>Departmental Store</title>
+
+    <!--Fav Icon-->
+    <link rel="shortcut icon" href="~/Resources/Guest/Layout/images/icon.png" type="image/png" />
+</head>
+
+<!--Main Body-->
+<body>
+    <!--NavBar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"
+         style="height: 60px;">
+        <!--Icon-->
+        <div>
+            <a href="/Guest/Dashboard">
+                <img src="~/Resources/Guest/Layout/images/icon.svg"
+                     width="90"
+                     class="collapse navbar-collapse"
+                     style="margin-left: 30px;" />
+            </a>
+        </div>
+        <!--Website Name-->
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="/Guest/Dashboard">Departmental Store</a>
+        </div>
+
+        <!--Account: Dropdown menu-->
+        <nav class="nav">
+            <button class="btn btn-success loginButton btn-block"
+                    id="loginButton">
+                Login with an account
+            </button>
+
+        </nav>
+    </nav>
+
+    <!--Section-->
+    <section>
+        <!--Workspace-->
+        <div id="workspace">
+            @RenderBody()
+        </div>
+        <!--End of Workspace-->
+    </section>
+
+    <!--Script-->
+    <!--LinkJS-->
+    <div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/Guest/Layout/js")
+        @RenderSection("Scripts", required: false)
+    </div>
+</body>
+</html>
+

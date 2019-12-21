@@ -1,0 +1,71 @@
+body {
+  margin: 20px;
+  padding: 0;
+  background: #fff;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+#productImages {
+  background: #fff;
+  width: 500px;
+  float: left;
+  margin-right: 10px;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(to bottom, orange, rgba(0, 0, 0, 0)) 1 100%;
+}
+/*Main Image*/
+.main-img {
+    text-align: center;
+    border-bottom: #FFF2DA solid 2px;
+}
+.main-img img {
+    width: 500px;
+}
+/*Small Images*/
+.imgs {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 3px;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 1px;
+  padding-top: 1px;
+}
+.imgs img {
+  width: 70px;
+  cursor: pointer;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn var(100) ease-in 1 forwards;
+}
+
+:root {
+  /* Set fade in duration */
+  --fade-time: 0.5s;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+  .imgs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/*Product Information*/
+#productInformation {
+  padding: 5px;
+  margin-top: 50px;
+  display: block !important;
+}

@@ -1,0 +1,128 @@
+﻿@model DepartmentalStore.Viewmodels.ProductDetailViewModel
+
+@{
+    ViewBag.Title = "Product Detail";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--Link CSS-->
+    @Styles.Render("~/bundles/Admin/ProductDetail/css")
+    @Styles.Render("~/Content/css")
+    <title>Detail</title>
+</head>
+<body>
+    <div class="container">
+        <!--Product Images-->
+        <div id="productImages">
+            <!--The big image currently displayed-->
+            @{
+                if (Model.ImageReferences.Count == 0)
+                {
+                    <div class="main-img">
+                        <img src="#" id="current" />
+                    </div>
+                    <div class="imgs">
+                        <div class="smallImg">
+                            <img src="#" />
+                        </div>
+                        <div class="smallImg">
+                            <img src="#" />
+                        </div>
+                        <div class="smallImg">
+                            <img src="#" />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="main-img">
+                        <img src="@Model.ImageReferences[0].path" id="current" />
+                    </div>
+                    <div class="imgs">
+                        <div class="smallImg">
+                            <img src="@Model.ImageReferences[0].path" />
+                        </div>
+                        <div class="smallImg">
+                            <img src="@Model.ImageReferences[1].path" />
+                        </div>
+                        <div class="smallImg">
+                            <img src="@Model.ImageReferences[2].path" />
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <!--Product Information-->
+        <div id="productInformation">
+            <table class="table table-striped" style="display: inline;">
+                <tbody>
+                    <!--Product Name-->
+                    <tr>
+                        <th scope="row">Product Name</th>
+                        <td id="productName">@Model.Product.name</td>
+                    </tr>
+                    <!--Product ID-->
+                    <tr>
+                        <th scope="row">ID</th>
+                        <td id="productId">@Model.Product.pid</td>
+                    </tr>
+                    <!--Rating-->
+                    <tr>
+                        <th scope="row">Rating</th>
+                        <td id="rating"><span>@Model.Product.price</span> VND</td>
+                    </tr>
+                    <!--Quantity Left-->
+                    <tr>
+                        <th scope="row">Quantity</th>
+                        <td id="quantity">@Model.Product.quantity</td>
+                    </tr>
+                    <!--Vender-->
+                    <tr>
+                        <th scope="row">Vender</th>
+                        <td id="vender">@Model.Product.vendor</td>
+                    </tr>
+                    <!--Importing Day-->
+                    <tr>
+                        <th scope="row">Importing Day</th>
+                        @{
+                            if (Model.Batch == null)
+                            {
+                                <td id="importingDay"></td>
+                            }
+                            else
+                            {
+                                DateTime importDate = (DateTime)Model.Batch.importDate;
+                                <td id="importingDay">@importDate.ToShortDateString()</td>
+                            }
+                        }
+
+                    </tr>
+                    <!--Expirating Day-->
+                    <tr>
+                        <th scope="row">Expirating Day</th>
+                        @{
+                            if (Model.Batch == null)
+                            {
+                                <td id="expiratingDay"></td>
+                            }
+                            else
+                            {
+                                DateTime expiratingDate = (DateTime)Model.Batch.expirationDate;
+                                <td id="importingDay">@expiratingDate.ToShortDateString()</td>
+                            }
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--Link JS-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Admin/ProductDetail/js")
+</body>
+</html>
+

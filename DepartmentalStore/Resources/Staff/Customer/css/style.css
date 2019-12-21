@@ -1,0 +1,109 @@
+﻿.button {
+    background-color: #1686d9;
+    border: 2px solid white;
+    border-radius: 30px;
+    text-decoration: none;
+    padding: 10px 28px;
+    color: white;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+    .button:hover {
+        background-color: white;
+        color: #1686d9;
+        border: 2px solid #1686d9;
+    }
+
+input {
+    margin: 15px auto;
+    display: block;
+    width: 50%;
+    padding: 8px;
+    border: 1px solid gray;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 42px;
+    color: #333;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+    .close:hover {
+        color: #666;
+    }
+
+.my-custom-scrollbar {
+    height: 650px;
+    overflow: auto;
+}
+
+/*Custom*/
+.table-container {
+    width: 1300px;
+    margin: 0px auto;
+}
+
+.popup-title {
+    color: #1686d9;
+    font-size: 30px;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.bg-customer {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-customer-contents {
+    height: 360px;
+    width: 500px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.bg-editCustomer {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-editCustomer-contents {
+    height: 360px;
+    width: 500px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.warning::-webkit-input-placeholder {
+    color: #da1b60 !important;
+}
+
+.warning {
+    border: 1px solid #da1b60 !important;
+}

@@ -1,0 +1,26 @@
+﻿/*Dashboard*/
+#dashboardItem {
+    margin-left: 500px;
+    margin-top: 100px;
+    bottom: 20%;
+    right: 25%;
+    left: 25%;
+    width: 2000px;
+    height: 500px;
+}
+.hover-card:hover {
+    transform: scale(1.05);
+}
+
+#exportReportButton {
+    margin-left: -205px;
+    margin-top: 150px;
+    background-color: darkgray;
+    position: fixed;
+    z-index:990;
+}
+#exportReportButton:hover {
+    /*transform: scale(1.05);*/
+    margin-left: -2px;
+}
+

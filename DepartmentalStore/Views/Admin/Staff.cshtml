@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "Staff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    @Styles.Render("~/bundles/Admin/Staff/css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/Admin/Staff/js")
+}
+
+@model DepartmentalStore.Viewmodels.StaffViewModel
+
+
+
+<!--Export to PDF-->
+<button class="btn" id="exportPdf">
+    @Html.ActionLink("Export PDF", "StaffReport", new { ReportType = "pdf" })
+    <img src="~/Resources/Admin/Layout/images/pdf.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to PDF-->
+<!--Export to Excel-->
+<button class="btn" id="exportExcel">
+    @Html.ActionLink("Export Excel", "StaffReport", new { ReportType = "excel" })
+    <img src="~/Resources/Admin/Layout/images/excel.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to Excel-->
+<!--Export to Word-->
+<button class="btn" id="exportWord">
+    @Html.ActionLink("Export Word", "StaffReport", new { ReportType = "word" })
+    <img src="~/Resources/Admin/Layout/images/word.svg" width="30px" style="margin-left:5px;" />
+</button>
+<!--End of Export to Word-->
+
+<div style="width: 1300px; margin: 10px auto; ">
+    <button id="addStaff" class="btn btn-lg btn-primary" style="margin-right: 10px; border-radius: 10px; background-color: #007dff;">
+        Add New Staff
+    </button>
+    @*Searching Bar*@
+    <form id="searchForm" class="form-inline my-2 my-lg-0" style="display:inline-block;float:right;">
+        <input id="search" class="form-control mr-sm-2" type="search" placeholder="Staff's Name" aria-label="Search" style="border-top:none;border-left:none; border-right:none;">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-image: none;">
+            <i class="material-icons" style="background-image: none;">
+                search
+            </i>
+        </button>
+    </form>
+</div>
+<!-- Add New Staff Section -->
+<div class="bg-staff">
+    <div class="bg-staff-contents">
+        <div class="close" id="closeAddStaff">+</div>
+        <!--Form to add new Staff-->
+        <form id="addStaffForm">
+            <h2 class="form-row popup-title">
+                Add New Staff
+            </h2>
+            <div class="form-row">
+                <!--Staff Name-->
+                <div class="form-group col-md-6">
+                    <label for="staffName">Staff Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="staffName"
+                           placeholder="Name" />
+                </div>
+                <!--Staff ID-->
+                <div class="form-group col-md-6">
+                    <label for="staffId">Staff ID</label>
+                    @{
+                        try
+                        {
+                            int max = 0;
+                            for (int i = 0; i < Model.AllStaffs.Count; i++)
+                            {
+                                if (int.Parse(Model.AllStaffs[i].sid) > max)
+                                {
+                                    max = int.Parse(Model.AllStaffs[i].sid);
+                                }
+                            }
+                            int sid = max + 1;
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="staffId"
+                                   placeholder="ID"
+                                   readonly="readonly"
+                                   value=@sid />
+                        }
+                        catch
+                        {
+    
+                        }
+
+                    }
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Salary-->
+                <div class="form-group col-md-6">
+                    <label for="salary">Salary</label>
+                    <input type="text"
+                           class="form-control"
+                           id="salary"
+                           placeholder="Salary" />
+                </div>
+                <!--Phone Number-->
+                <div class="form-group col-md-6 ">
+                    <label for="phoneNumber">Phone No.</label>
+                    <input type="text"
+                           class="form-control"
+                           id="phoneNumber"
+                           placeholder="Phone Number" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--username-->
+                <div class="form-group col-md-6">
+                    <label for="username">Username</label>
+                    <input type="text"
+                           class="form-control"
+                           id="username"
+                           placeholder="Username" />
+                </div>
+                <!--password-->
+                <div class="form-group col-md-6 ">
+                    <label for="password">Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="password"
+                           placeholder="Password" />
+                </div>
+            </div>
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+<!--End of Add New Staff-->
+<!-- Edit Staff Info Section -->
+<div class="bg-editStaff">
+    <div class="bg-editStaff-contents">
+        <div class="close" id="closeEditStaff">+</div>
+        <!--Form to add new Staff-->
+        <form id="editStaffForm">
+            <!--Header-->
+            <h2 class="form-row popup-title">
+                Edit Staff Info
+            </h2>
+            <div class="form-row">
+                <!--Staff Name-->
+                <div class="form-group col-md-6">
+                    <label for="staffName">Staff Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editStaffName"
+                           placeholder="Name" />
+                </div>
+                <!--Staff ID-->
+                <div class="form-group col-md-6">
+                    <label for="staffId">Staff ID</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editStaffId"
+                           placeholder="ID"
+                           readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--Salary-->
+                <div class="form-group col-md-6">
+                    <label for="salary">Salary</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editSalary"
+                           placeholder="Salary" />
+                </div>
+                <!--Phone Number-->
+                <div class="form-group col-md-6 ">
+                    <label for="phoneNumber">Phone No.</label>
+                    <input type="text"
+                           class="form-control"
+                           id="editPhoneNumber"
+                           placeholder="Phone Number" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!--New Password-->
+                <div class="form-group col-md-6">
+                    <label for="newPassword">New Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="newPassword"
+                           placeholder="New Password" />
+                </div>
+            </div>
+            <!--Confirm Button-->
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+        </form>
+    </div>
+</div>
+<!--Data Table-->
+<div class="table-container">
+    <table class="table table-bordered table-striped mb-0">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 15%;" scope="col">ID</th>
+                <th style="width: 20%;" scope="col">Name</th>
+                <th style="width: 20%;" scope="col">Phone No.</th>
+                <th style="width: 20%;" scope="col">Salary</th>
+                <th style="width: 10%;" scope="col"></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<!--Table Container is custom-->
+<div class="table-container my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+        @foreach (var staff in Model.Staffs)
+        {
+            <tr>
+                <td style="width: 15%;">@staff.sid</td>
+                <td style="width: 20%;">@staff.name</td>
+                <td style="width: 20%;">@staff.phone</td>
+                @{
+                    var salary = string.Format("{0:#,0}", staff.salary);
+                }
+                <td style="width: 20%;">@salary VND</td>
+                <td style="width: 10%;">
+                    <button class="editStaffBtn btn btn-sm btn-primary " style="background-color:transparent;" value="@staff.sid">
+                        <img src="~/Resources/Admin/Layout/images/pencil.svg" width="30px" />
+                    </button>
+                    <button class="deleteStaffBtn btn btn-sm btn-danger " style="background-color:transparent;" value="@staff.sid">
+                        <img src="~/Resources/Admin/Layout/images/delete.svg" width="30px" />
+                    </button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<!--End of Data table-->

@@ -1,0 +1,750 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DepartmentalStoreManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminAccount">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="passwordHash" Type="binary" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="bid" />
+          </Key>
+          <Property Name="bid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="importDate" Type="datetime" />
+          <Property Name="expirationDate" Type="datetime" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="pid" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="10" />
+          <Property Name="points" Type="int" />
+          <Property Name="did" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DepartmentalStore">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Detail">
+          <Key>
+            <PropertyRef Name="pcid" />
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pcid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="value" Type="float" />
+        </EntityType>
+        <EntityType Name="ImageReference">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="path" Type="nvarchar" MaxLength="255" />
+          <Property Name="pid" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MonthlyIncome">
+          <Key>
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Jan" Type="float" />
+          <Property Name="Feb" Type="float" />
+          <Property Name="Mar" Type="float" />
+          <Property Name="Apr" Type="float" />
+          <Property Name="May" Type="float" />
+          <Property Name="Jun" Type="float" />
+          <Property Name="Jul" Type="float" />
+          <Property Name="Aug" Type="float" />
+          <Property Name="Sep" Type="float" />
+          <Property Name="Oct" Type="float" />
+          <Property Name="Nov" Type="float" />
+          <Property Name="Dec" Type="float" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="price" Type="float" />
+          <Property Name="vendor" Type="nvarchar" MaxLength="255" />
+          <Property Name="type" Type="nvarchar" MaxLength="255" />
+          <Property Name="unit" Type="nvarchar" MaxLength="255" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="did" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="pcid" />
+          </Key>
+          <Property Name="pcid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sid" Type="nvarchar" MaxLength="50" />
+          <Property Name="cid" Type="nvarchar" MaxLength="50" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="value" Type="float" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="sid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="10" />
+          <Property Name="salary" Type="float" />
+          <Property Name="did" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StaffAccount">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="passwordHash" Type="binary" MaxLength="32" />
+          <Property Name="sid" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Batch__pid__2F10007B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__did__2C3393D0">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detail__pcid__35BCFE0A">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="pcid" />
+            </Principal>
+            <Dependent Role="Detail">
+              <PropertyRef Name="pcid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detail__pid__36B12243">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Detail">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ImageRefere__pid__07C12930">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ImageReference" Type="Self.ImageReference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ImageReference">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__did__29572725">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__cid__32E0915F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__sid__31EC6D26">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="sid" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff__did__267ABA7A">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StaffAccoun__sid__398D8EEE">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StaffAccount" Type="Self.StaffAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="sid" />
+            </Principal>
+            <Dependent Role="StaffAccount">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DepartmentalStoreManagementModelStoreContainer">
+          <EntitySet Name="AdminAccount" EntityType="Self.AdminAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentalStore" EntityType="Self.DepartmentalStore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Detail" EntityType="Self.Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageReference" EntityType="Self.ImageReference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlyIncome" EntityType="Self.MonthlyIncome" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffAccount" EntityType="Self.StaffAccount" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Batch__pid__2F10007B" Association="Self.FK__Batch__pid__2F10007B">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Batch" EntitySet="Batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__did__2C3393D0" Association="Self.FK__Customer__did__2C3393D0">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStore" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detail__pcid__35BCFE0A" Association="Self.FK__Detail__pcid__35BCFE0A">
+            <End Role="Purchase" EntitySet="Purchase" />
+            <End Role="Detail" EntitySet="Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detail__pid__36B12243" Association="Self.FK__Detail__pid__36B12243">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Detail" EntitySet="Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ImageRefere__pid__07C12930" Association="Self.FK__ImageRefere__pid__07C12930">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ImageReference" EntitySet="ImageReference" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__did__29572725" Association="Self.FK__Product__did__29572725">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStore" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__cid__32E0915F" Association="Self.FK__Purchase__cid__32E0915F">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__sid__31EC6D26" Association="Self.FK__Purchase__sid__31EC6D26">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff__did__267ABA7A" Association="Self.FK__Staff__did__267ABA7A">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStore" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StaffAccoun__sid__398D8EEE" Association="Self.FK__StaffAccoun__sid__398D8EEE">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="StaffAccount" EntitySet="StaffAccount" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DepartmentalStoreManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminAccount">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwordHash" Type="Binary" MaxLength="32" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="Batch">
+          <Key>
+            <PropertyRef Name="bid" />
+          </Key>
+          <Property Name="bid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="importDate" Type="DateTime" Precision="3" />
+          <Property Name="expirationDate" Type="DateTime" Precision="3" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="pid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Batch__pid__2F10007B" FromRole="Batch" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="points" Type="Int32" />
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DepartmentalStore" Relationship="Self.FK__Customer__did__2C3393D0" FromRole="Customer" ToRole="DepartmentalStore" />
+          <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchase__cid__32E0915F" FromRole="Customer" ToRole="Purchase" />
+        </EntityType>
+        <EntityType Name="DepartmentalStore">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__did__2C3393D0" FromRole="DepartmentalStore" ToRole="Customer" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__did__29572725" FromRole="DepartmentalStore" ToRole="Product" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK__Staff__did__267ABA7A" FromRole="DepartmentalStore" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Detail">
+          <Key>
+            <PropertyRef Name="pcid" />
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pcid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="value" Type="Double" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK__Detail__pcid__35BCFE0A" FromRole="Detail" ToRole="Purchase" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Detail__pid__36B12243" FromRole="Detail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Double" />
+          <Property Name="vendor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Batches" Relationship="Self.FK__Batch__pid__2F10007B" FromRole="Product" ToRole="Batch" />
+          <NavigationProperty Name="DepartmentalStore" Relationship="Self.FK__Product__did__29572725" FromRole="Product" ToRole="DepartmentalStore" />
+          <NavigationProperty Name="Details" Relationship="Self.FK__Detail__pid__36B12243" FromRole="Product" ToRole="Detail" />
+          <NavigationProperty Name="ImageReferences" Relationship="DepartmentalStoreManagementModel.FK__ImageRefere__pid__07C12930" FromRole="Product" ToRole="ImageReference" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="pcid" />
+          </Key>
+          <Property Name="pcid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="value" Type="Double" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Purchase__cid__32E0915F" FromRole="Purchase" ToRole="Customer" />
+          <NavigationProperty Name="Details" Relationship="Self.FK__Detail__pcid__35BCFE0A" FromRole="Purchase" ToRole="Detail" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__Purchase__sid__31EC6D26" FromRole="Purchase" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="sid" />
+          </Key>
+          <Property Name="sid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="salary" Type="Double" />
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DepartmentalStore" Relationship="Self.FK__Staff__did__267ABA7A" FromRole="Staff" ToRole="DepartmentalStore" />
+          <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchase__sid__31EC6D26" FromRole="Staff" ToRole="Purchase" />
+          <NavigationProperty Name="StaffAccounts" Relationship="Self.FK__StaffAccoun__sid__398D8EEE" FromRole="Staff" ToRole="StaffAccount" />
+        </EntityType>
+        <EntityType Name="StaffAccount">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwordHash" Type="Binary" MaxLength="32" FixedLength="true" />
+          <Property Name="sid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK__StaffAccoun__sid__398D8EEE" FromRole="StaffAccount" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK__Batch__pid__2F10007B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__did__2C3393D0">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__cid__32E0915F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__did__29572725">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Staff__did__267ABA7A">
+          <End Role="DepartmentalStore" Type="Self.DepartmentalStore" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentalStore">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detail__pcid__35BCFE0A">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="pcid" />
+            </Principal>
+            <Dependent Role="Detail">
+              <PropertyRef Name="pcid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detail__pid__36B12243">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Detail">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__sid__31EC6D26">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="sid" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StaffAccoun__sid__398D8EEE">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="StaffAccount" Type="Self.StaffAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="sid" />
+            </Principal>
+            <Dependent Role="StaffAccount">
+              <PropertyRef Name="sid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DepartmentalStoreManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminAccounts" EntityType="Self.AdminAccount" />
+          <EntitySet Name="Batches" EntityType="Self.Batch" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DepartmentalStores" EntityType="Self.DepartmentalStore" />
+          <EntitySet Name="Details" EntityType="Self.Detail" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Purchases" EntityType="Self.Purchase" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="StaffAccounts" EntityType="Self.StaffAccount" />
+          <AssociationSet Name="FK__Batch__pid__2F10007B" Association="Self.FK__Batch__pid__2F10007B">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Batch" EntitySet="Batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__did__2C3393D0" Association="Self.FK__Customer__did__2C3393D0">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStores" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__cid__32E0915F" Association="Self.FK__Purchase__cid__32E0915F">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__did__29572725" Association="Self.FK__Product__did__29572725">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStores" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Staff__did__267ABA7A" Association="Self.FK__Staff__did__267ABA7A">
+            <End Role="DepartmentalStore" EntitySet="DepartmentalStores" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detail__pcid__35BCFE0A" Association="Self.FK__Detail__pcid__35BCFE0A">
+            <End Role="Purchase" EntitySet="Purchases" />
+            <End Role="Detail" EntitySet="Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detail__pid__36B12243" Association="Self.FK__Detail__pid__36B12243">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Detail" EntitySet="Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__sid__31EC6D26" Association="Self.FK__Purchase__sid__31EC6D26">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StaffAccoun__sid__398D8EEE" Association="Self.FK__StaffAccoun__sid__398D8EEE">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="StaffAccount" EntitySet="StaffAccounts" />
+          </AssociationSet>
+          <EntitySet Name="ImageReferences" EntityType="DepartmentalStoreManagementModel.ImageReference" />
+          <AssociationSet Name="FK__ImageRefere__pid__07C12930" Association="DepartmentalStoreManagementModel.FK__ImageRefere__pid__07C12930">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ImageReference" EntitySet="ImageReferences" />
+          </AssociationSet>
+          <EntitySet Name="MonthlyIncomes" EntityType="DepartmentalStoreManagementModel.MonthlyIncome" />
+        </EntityContainer>
+        <EntityType Name="ImageReference">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="pid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="DepartmentalStoreManagementModel.FK__ImageRefere__pid__07C12930" FromRole="ImageReference" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__ImageRefere__pid__07C12930">
+          <End Type="DepartmentalStoreManagementModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DepartmentalStoreManagementModel.ImageReference" Role="ImageReference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="ImageReference">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MonthlyIncome">
+          <Key>
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Jan" Type="Double" />
+          <Property Name="Feb" Type="Double" />
+          <Property Name="Mar" Type="Double" />
+          <Property Name="Apr" Type="Double" />
+          <Property Name="May" Type="Double" />
+          <Property Name="Jun" Type="Double" />
+          <Property Name="Jul" Type="Double" />
+          <Property Name="Aug" Type="Double" />
+          <Property Name="Sep" Type="Double" />
+          <Property Name="Oct" Type="Double" />
+          <Property Name="Nov" Type="Double" />
+          <Property Name="Dec" Type="Double" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DepartmentalStoreManagementModelStoreContainer" CdmEntityContainer="DepartmentalStoreManagementEntities">
+          <EntitySetMapping Name="AdminAccounts">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.AdminAccount">
+              <MappingFragment StoreEntitySet="AdminAccount">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="passwordHash" ColumnName="passwordHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Batches">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Batch">
+              <MappingFragment StoreEntitySet="Batch">
+                <ScalarProperty Name="bid" ColumnName="bid" />
+                <ScalarProperty Name="importDate" ColumnName="importDate" />
+                <ScalarProperty Name="expirationDate" ColumnName="expirationDate" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="did" ColumnName="did" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentalStores">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.DepartmentalStore">
+              <MappingFragment StoreEntitySet="DepartmentalStore">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Details">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Detail">
+              <MappingFragment StoreEntitySet="Detail">
+                <ScalarProperty Name="pcid" ColumnName="pcid" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="vendor" ColumnName="vendor" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="did" ColumnName="did" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchases">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Purchase">
+              <MappingFragment StoreEntitySet="Purchase">
+                <ScalarProperty Name="pcid" ColumnName="pcid" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="sid" ColumnName="sid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="did" ColumnName="did" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffAccounts">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.StaffAccount">
+              <MappingFragment StoreEntitySet="StaffAccount">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="passwordHash" ColumnName="passwordHash" />
+                <ScalarProperty Name="sid" ColumnName="sid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageReferences">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.ImageReference">
+              <MappingFragment StoreEntitySet="ImageReference">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyIncomes">
+            <EntityTypeMapping TypeName="DepartmentalStoreManagementModel.MonthlyIncome">
+              <MappingFragment StoreEntitySet="MonthlyIncome">
+                <ScalarProperty Name="Dec" ColumnName="Dec" />
+                <ScalarProperty Name="Nov" ColumnName="Nov" />
+                <ScalarProperty Name="Oct" ColumnName="Oct" />
+                <ScalarProperty Name="Sep" ColumnName="Sep" />
+                <ScalarProperty Name="Aug" ColumnName="Aug" />
+                <ScalarProperty Name="Jul" ColumnName="Jul" />
+                <ScalarProperty Name="Jun" ColumnName="Jun" />
+                <ScalarProperty Name="May" ColumnName="May" />
+                <ScalarProperty Name="Apr" ColumnName="Apr" />
+                <ScalarProperty Name="Mar" ColumnName="Mar" />
+                <ScalarProperty Name="Feb" ColumnName="Feb" />
+                <ScalarProperty Name="Jan" ColumnName="Jan" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

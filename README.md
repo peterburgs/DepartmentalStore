@@ -3,7 +3,7 @@ This repository contains all requirements of the course Web Programming.
 <br/>
 Author: <i>Trịnh Minh Anh & Lê Đức Thịnh<i/>
 <hr/>
-You can find the Database Script at: https://github.com/peterburgs/DepartmentalStore/tree/master/Database%20Script
+For Database Script at: https://github.com/peterburgs/DepartmentalStore/tree/master/Database%20Script
   <br/>
   For documentaion: https://github.com/peterburgs/DepartmentalStore/tree/master/Documentation
   <br/> 
